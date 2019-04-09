@@ -1,0 +1,13 @@
+sudo apt install python3-pip
+
+pip install pipenv
+
+go the project folder
+
+pipenv --python python3
+
+pipenv install : will create pipfile.lock
+
+pipenv install package_name=version_number
+
+pip freeze : to check the packages that have installed

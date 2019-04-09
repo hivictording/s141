@@ -1,0 +1,49 @@
+
+div {
+    background-color: lightgreen;
+    /*border: 1px dotted blue;*/
+}
+
+div table {
+    background-color: lightsalmon;
+}
+
+#i100 {
+    background-color: bisque;
+    border: coral dashed 2px;
+    height: 200px;
+    width: 500px;
+    text-align: center;
+    vertical-align: center;
+    /*line-height: 200px;*/
+    font-family: Broadway;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.c1 {
+    background-color: chocolate;
+    /*height: 30px;*/
+}
+
+.c2 {
+    background-color: deeppink;
+    /*height: 50px;*/
+}
+
+.c1 div {
+    background-color: black;
+    color: white;
+}
+
+.table.title1, .table.title2 {
+    background-color: lightseagreen;
+}
+
+label[for="username"] {
+    color: red;
+}
+
+label[for="password"] {
+    color: blue;
+}

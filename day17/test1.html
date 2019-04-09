@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to SQA's Home</title>
+    <style>
+        body {
+            margin: 0 auto;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .display-on {
+            display: block;
+        }
+
+        .display-off {
+            display: none;
+        }
+
+        .page-header {
+            height: 48px;
+            background: lightcyan;
+        }
+
+        .page-menu {
+            background: lightgrey;
+            position: absolute;
+            top: 48px;
+            left: 0;
+            bottom: 0;
+            width: 200px;
+        }
+
+        .page-content {
+            background: lightsteelblue;
+            position: absolute;
+            top: 48px;
+            left: 200px;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            min-width: 980px;
+            z-index: 9;
+        }
+
+        .page-menu .pt:hover {
+            background: lightblue;
+        }
+
+        .page-menu .pt:hover .submenu-pt {
+            display: block;
+        }
+
+        .page-menu .tt:hover {
+            background: lightblue;
+        }
+
+        .page-menu .pt .submenu-pt {
+            height: 320px;
+            width: 250px;
+            background-color: lightblue;
+            position: absolute;
+            z-index: 10;
+            left: 200px;
+            top: 0;
+            display: none;
+        }
+
+        .page-menu .pt .submenu-pt .submenu {
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .page-menu .pt .submenu-pt .submenu:hover {
+            background-color: lightseagreen;
+            cursor: pointer;
+        }
+
+        .shader {
+            position: fixed;
+            background-color: gray;
+            opacity: 0.5%;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 11;
+        }
+
+        .dialog_box {
+            height: 500px;
+            width: 800px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /*top:0;*/
+            /*bottom:0;*/
+            /*left:0;*/
+            /*right:0;*/
+            /*margin:auto;*/
+            z-index: 12;
+            background-color: black;
+            color: white;
+        }
+
+        .add_fw {
+            position: absolute;
+            height: 130px;
+            width: 250px;
+            background-color: dodgerblue;
+            color: white;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 13;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id='dialog_add' class="add_fw">
+    <div id="model" style="weight:120px;height:25px;margin-top: 10px;">
+        <span style="display:inline-block;weight:120px;height:25px;text-align: right;">Model:</span>
+        <input type="text" value='firewall model' style="weight:120px;height:25px;"/>
+    </div>
+    <div id="value" style="margin-top:15px;weight:120px;height:25px;">
+        <span style="display:inline-block;weight:120px;height:25px;text-align: right;">Value:</span>
+        <input type="text" style="margin-left:5px;weight:120px;height:25px;"/>
+    </div>
+    <div style="margin-top:15px;weight:120px;height:30px;margin-left:54px;">
+        <input id='button-ok' type="button" width="120px" height="30px" value="OK"/>
+        <input id='button-cancel' type="button" width="120px" height="30px" value="Cancel" style="margin-left: 54px"/>
+    </div>
+</div>
+<div id="dialog" class="dialog_box display-off">
+    <input type="button" style="padding:10px" value="Select All">
+    <input type="button" style="padding:10px" value="Unselect All"/>
+    <input type="button" style="padding:10px" value="Reverse"/>
+    <input type="button" style="padding:10px" value="Collect firewall info" onclick="collect_fws()"/>
+    <input type="button" style="padding:10px" value="Test" onclick="test()"/>
+    <input type="button" style="padding:10px" value="Test2" onclick="test2()"/>
+    <input id='button-add' type="button" style="padding:10px" value="Add""/>
+    <div id="firewalls">
+        <span style="padding:2px">NSA 2650:</span><input class="checkbox" type="checkbox" name="fw_model" value="2650"/>
+        <span style="padding:2px">NSA 3650:</span><input class="checkbox" type="checkbox" name="fw_model" value="3650"/>
+        <span style="padding:2px">NSA 4650:</span><input class="checkbox" type="checkbox" name="fw_model" value="4650"/>
+        <span style="padding:2px">NSA 5650:</span><input class="checkbox" type="checkbox" name="fw_model" value="5650"/>
+        <span style="padding:2px">NSA 6650:</span><input class="checkbox" type="checkbox" name="fw_model" value="6650"/>
+        <span style="padding:2px">NSA 9250:</span><input class="checkbox" type="checkbox" name="fw_model" value="9250"/>
+        <span style="padding:2px">NSA 9450:</span><input class="checkbox" type="checkbox" name="fw_model" value="9450"/>
+        <span style="padding:2px">NSA 9650:</span><input class="checkbox" type="checkbox" name="fw_model" value="9650"/>
+        <span style="padding:2px">NSA 2600:</span><input class="checkbox" type="checkbox" name="fw_model" value="2600"/>
+        <span style="padding:2px">NSA 3600:</span><input class="checkbox" type="checkbox" name="fw_model" value="3600"/>
+        <span style="padding:2px">NSA 4600:</span><input class="checkbox" type="checkbox" name="fw_model" value="4600"/>
+        <span style="padding:2px">NSA 5600:</span><input class="checkbox" type="checkbox" name="fw_model" value="5600"/>
+        <span style="padding:2px">NSA 6600:</span><input class="checkbox" type="checkbox" name="fw_model" value="6600"/>
+        <span style="padding:2px">NSA 9200:</span><input class="checkbox" type="checkbox" name="fw_model" value="9200"/>
+        <span style="padding:2px">NSA 9400:</span><input class="checkbox" type="checkbox" name="fw_model" value="9400"/>
+        <span style="padding:2px">NSA 9600:</span><input class="checkbox" type="checkbox" name="fw_model" value="9600"/>
+        <span style="padding:2px">SOHO 250:</span><input class="checkbox" type="checkbox" name="fw_model" value="250"/>
+        <span style="padding:2px">TZ 350:</span><input class="checkbox" type="checkbox" name="fw_model" value="350"/>
+        <span style="padding:2px">TZ 600:</span><input class="checkbox" type="checkbox" name="fw_model" value="600"/>
+        <span style="padding:2px">TZ 500:</span><input class="checkbox" type="checkbox" name="fw_model" value="500"/>
+        <span style="padding:2px">TZ 400:</span><input class="checkbox" type="checkbox" name="fw_model" value="400"/>
+        <span style="padding:2px">TZ 300:</span><input class="checkbox" type="checkbox" name="fw_model" value="300"/>
+    </div>
+    <input style="position: absolute;right:0;bottom:0" type="button" value="Cancel" onclick="diag_remove()"/>
+</div>
+<div id="shader" class="shader display-off">sssssssssssssssssssssss</div>
+<div class="page-header">
+
+</div>
+<div class="page-menu">
+    <div class="pt" style="position:relative;height: 30px;line-height: 30px;text-align: center;margin-top: 20px">
+        Performance Test
+        <div class="submenu-pt">
+            <div class="submenu udp" onclick="diag_pop()">RFC 2544</div>
+            <div class="submenu http">HTTP Throughput</div>
+            <div class="submenu tcprate">TCP Rate</div>
+            <div class="submenu imix">IMIX</div>
+            <div class="submenu vpn_udp">IPSEC VPN RFC 2544</div>
+            <div class="submenu vpn_http">IPSEC VPN HTTP Throughput</div>
+            <div class="submenu dpissl_http">DPI SSL HTTP Throughput</div>
+            <div class="submenu sslvpn_udp">SSLVPN RFC 2544</div>
+            <div class="submenu sslvpn_http">SSLVPN HTTP Throughput</div>
+        </div>
+    </div>
+    <div class='tt' style="height: 30px;line-height: 30px;text-align: center;margin-top: 20px">
+        Traffic Test
+    </div>
+</div>
+<div class="page-content">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consequatur delectus deserunt dicta, dolores
+    dolorum ducimus ea ex exercitationem facere fugit illum impedit molestiae nam nisi odio officia perspiciatis,
+    provident quae quia rerum sit sunt tempore tenetur totam vel veniam voluptatem. Accusantium consectetur delectus
+    doloremque iure libero, molestias sit ut vel! Ad alias autem consequuntur deserunt, et excepturi fugit incidunt nisi
+    nobis praesentium quas quia, vel voluptas. A alias, autem eius est eveniet iusto molestiae nihil quo, repudiandae
+    sed sequi unde. Ad amet aspernatur at beatae blanditiis consequuntur deleniti distinctio ea eaque eligendi est
+    explicabo fugit in inventore iusto laborum libero necessitatibus neque nihil nisi, odio omnis quam reiciendis
+    suscipit tenetur vero voluptatum! Cum delectus dignissimos ex harum id, illum impedit iste libero mollitia, nam
+    nobis tempora voluptate. Adipisci aspernatur at autem consequatur corporis debitis distinctio et eum ex in iure
+    laboriosam magnam magni minus modi, nisi placeat porro quisquam quo quos, reiciendis repellat rerum sequi, sint
+    totam. Natus, reprehenderit, repudiandae! Ad alias, aperiam architecto asperiores aut cupiditate deserunt dolores
+    eligendi eveniet ex expedita illo impedit ipsa labore laborum libero magni maiores minima modi neque nesciunt
+    nostrum, quis reiciendis repellendus similique. Asperiores assumenda consectetur, consequuntur eius eligendi impedit
+    incidunt ipsa iure laudantium libero maiores maxime, nostrum porro quidem recusandae repellat sed sint temporibus
+    vero voluptatum. Aliquid assumenda modi perferendis provident similique soluta velit. Aspernatur beatae blanditiis
+    consequatur culpa debitis eaque eligendi, eveniet exercitationem fuga libero molestiae mollitia nulla odio quaerat
+    quas qui ratione, voluptatem? Ab consequatur expedita harum pariatur. Aliquam aliquid, blanditiis dolores, ea earum
+    enim fugiat id illo illum, iusto nam non officiis perferendis perspiciatis placeat porro quasi qui quia sit velit
+    vero voluptas voluptatibus voluptatum? Ab accusantium alias blanditiis consequatur culpa deserunt dicta dignissimos,
+    dolore doloremque ducimus earum enim eos et facilis fugit hic ipsam labore laboriosam laborum maiores maxime nisi
+    numquam pariatur placeat quae quis quod recusandae repellat tempore ut? Aliquam at harum inventore. Aut autem
+    corporis error exercitationem, facere ipsum modi molestiae nam repellendus suscipit tempore ut vel. Accusantium
+    cumque deleniti expedita incidunt magnam, nemo perferendis reprehenderit sequi tempore! Blanditiis corporis cum
+    deserunt distinctio doloribus esse et excepturi facere facilis, fuga hic illum inventore libero molestias natus
+    neque nihil nulla numquam, odit officia pariatur porro provident sint tempore, temporibus ullam unde voluptatem.
+    Accusantium dolor facere facilis laudantium nemo porro provident quia, quibusdam? Adipisci asperiores aut dolorem
+    fuga incidunt ipsam itaque nesciunt non odit officia provident, quod ratione reiciendis repellat totam vel vitae.
+    Accusantium ad aliquam, amet aspernatur assumenda aut consequatur consequuntur deleniti dolor ducimus eaque esse ex
+    excepturi explicabo facere facilis incidunt itaque iure laboriosam laudantium magni molestiae nam nesciunt nostrum
+    obcaecati, omnis pariatur quasi quidem repellat saepe suscipit temporibus, tenetur totam unde vero voluptas
+    voluptate. Blanditiis excepturi, minus mollitia nobis quas quo sed sunt. Ab, ad aliquid consequuntur cum, delectus
+    dolore eaque esse est expedita facere fuga hic illum impedit ipsa maiores maxime molestias nobis nulla numquam
+    officiis quam reiciendis repudiandae sequi! Ab aperiam asperiores aut corporis cumque error, facere fuga fugiat
+    laboriosam modi molestiae numquam provident quo quos recusandae repudiandae voluptatem. Assumenda consectetur
+    dignissimos ea eum nulla obcaecati perspiciatis quaerat qui soluta. Eius necessitatibus odit quas. A aliquid
+    architecto dicta distinctio dolorem doloremque, ex laborum magnam nam natus nisi nostrum odit perspiciatis
+    reprehenderit, ullam veniam voluptates. Doloribus incidunt ipsa iure magnam maiores nobis praesentium rem sed,
+    similique totam. Accusantium corporis distinctio magnam, nemo obcaecati rem sequi unde. Asperiores assumenda
+    consectetur dolore dolorum eos esse eveniet, exercitationem ipsa ipsam iste itaque iure laudantium maiores neque
+    nihil officia porro quam quod rem, repellat sed veniam voluptate voluptatum? Accusamus asperiores assumenda beatae
+    commodi, consequuntur ea est ex incidunt ipsa ipsam iusto magnam modi numquam quas quasi quis quo, repellat
+    repellendus sapiente tenetur. A asperiores autem dolores doloribus fuga illum, maxime, natus nobis nostrum numquam,
+    vel voluptates? A aut commodi debitis deleniti dolorum ea enim, error est excepturi exercitationem, libero maxime
+    nihil nulla placeat possimus rem sunt voluptatem voluptates? Accusantium, aliquid amet aperiam architecto asperiores
+    debitis distinctio dolore ex fugit in itaque labore molestias necessitatibus nisi odit officia, provident quisquam
+    quo rerum saepe sequi similique velit vitae voluptas voluptates. Architecto autem beatae cupiditate doloribus ea
+    eaque earum error facere hic iusto labore magnam molestiae nisi officia, placeat repellendus soluta totam voluptas!
+    Aperiam at autem consequuntur ex excepturi harum labore, maxime minus nemo quam quasi saepe ullam? Amet animi at
+    autem consequuntur cum cumque debitis deleniti distinctio dolorum ducimus esse ex, illum ipsum itaque iure modi
+    mollitia necessitatibus nemo neque nihil nostrum officiis perspiciatis possimus provident quae similique sit soluta
+    sunt temporibus tenetur totam velit voluptas voluptates. Accusantium aliquid deleniti, dignissimos ducimus in
+    laboriosam non pariatur quibusdam reiciendis voluptatum. Adipisci assumenda aut autem delectus deserunt doloremque
+    eaque eos, expedita explicabo facilis fugiat harum inventore ipsa ipsam iure minus neque nihil nisi nobis nostrum
+    nulla officiis omnis perferendis porro provident quam quasi quidem quisquam quo repellendus reprehenderit similique
+    sit vel! At beatae consequuntur dignissimos hic porro possimus quasi tenetur voluptas? Alias, asperiores aut,
+    consequatur debitis dolore ex exercitationem fugiat itaque maxime nisi officia quaerat quod similique sint ullam
+    unde voluptatem. Animi architecto aspernatur assumenda beatae corporis ea, earum eius esse exercitationem hic id
+    illum natus necessitatibus odio, optio praesentium quam quisquam quo similique voluptates! Ad aliquid assumenda
+    atque cum deleniti doloribus eum fugiat, hic, impedit ipsa ipsam minus molestias mollitia nam nulla numquam
+    obcaecati provident quam rem rerum, sapiente similique temporibus velit voluptatem voluptatum? Atque beatae enim
+    facere in molestiae nisi placeat suscipit vero voluptate voluptates. Aperiam aspernatur aut, distinctio eligendi
+    illum ipsam modi officiis omnis, porro quam quis saepe vitae voluptates. Atque beatae consectetur, corporis deserunt
+    distinctio itaque nam officiis omnis perspiciatis placeat! Aliquid at earum eius, neque provident recusandae sunt
+    suscipit ullam vel veritatis. Animi cumque deserunt, distinctio ducimus est facilis inventore iure laudantium libero
+    maxime necessitatibus nihil nisi non officiis, quasi totam unde. Aliquam dicta libero magnam vitae voluptates! A
+    accusamus aut, deserunt dicta ducimus ea eligendi est expedita facilis in inventore maiores maxime nemo optio quos
+    reiciendis vel velit vitae? Ad autem deserunt dolorem earum, ex facilis hic in incidunt molestias placeat possimus
+    sunt suscipit! Alias asperiores assumenda consequatur dicta ducimus eligendi rerum voluptatum. Accusantium amet
+    asperiores aut commodi corporis debitis distinctio dolores doloribus exercitationem facilis fugit impedit in ipsam
+    iure iusto libero magni molestiae nam natus odio, odit, quibusdam quidem quo quod quos repellat sed vitae! Deserunt
+    dolorem ducimus eos fugit harum id inventore provident quae reiciendis sint. Ad alias, hic, illum in iusto magnam
+    placeat provident quas qui reiciendis repudiandae sit vitae, voluptas. Odit, sapiente, voluptates? Amet consequuntur
+    distinctio earum, exercitationem fugiat hic id labore omnis perspiciatis ratione rem sapiente tempora totam. Ex, in
+    rem? Harum ipsam nam quo sapiente sint! Deleniti id molestias temporibus vel voluptates. Adipisci corporis
+    distinctio eaque, eos eveniet expedita iste magni ullam. A architecto aspernatur corporis dolorem dolores eum
+    excepturi itaque, laudantium molestias, nobis non odio perspiciatis quas qui recusandae rerum saepe tempora
+    temporibus veritatis vitae voluptas, voluptate voluptatibus? Delectus deserunt eum inventore voluptatum? Aliquam
+    consequuntur error excepturi fuga, laborum nemo quam voluptatem! Architecto excepturi nisi nostrum odit quod vel
+    vitae. Aperiam asperiores dolores est et facere harum, ipsam iste iusto minima quasi, qui quia quisquam quod
+    recusandae repellendus repudiandae tenetur vel? Accusamus animi assumenda, atque dolores expedita hic id illo
+    inventore ipsa maiores minus mollitia nisi obcaecati pariatur, quam quibusdam repudiandae rerum suscipit totam ullam
+    unde velit vero vitae voluptate voluptatem! Consequatur culpa earum est fugiat in incidunt ipsum iure laboriosam
+    laborum magni mollitia nam nostrum quas, quod tenetur? Aut culpa cumque eveniet modi nostrum perspiciatis, veniam.
+    Animi autem cum deleniti ducimus, iusto laboriosam necessitatibus nulla, obcaecati omnis quasi quod sed sequi sit
+    suscipit tempore vel veritatis, voluptate voluptatum. Asperiores atque dicta dignissimos earum magni nam nostrum
+    nulla, saepe suscipit voluptatum. Accusamus ad est eveniet facere fugit impedit ipsa laboriosam maiores molestiae
+    nam! Amet assumenda consectetur delectus doloribus eveniet facere hic ipsam minus nam necessitatibus officia
+    perferendis, possimus quae quasi quidem quo reiciendis tenetur, ullam veniam vero. Ab asperiores culpa eos error,
+    esse hic mollitia praesentium quia sapiente temporibus. Aliquid amet aperiam at atque aut autem beatae dicta dolores
+    doloribus earum enim et hic inventore maiores molestias mollitia nam natus neque nesciunt nisi non nulla odit omnis
+    pariatur possimus quidem quo quos ratione reiciendis repudiandae rerum sint tempore temporibus, ut veniam voluptas
+    voluptate? Doloribus error expedita inventore iure nobis officiis perspiciatis possimus provident repudiandae sequi!
+    Accusamus aliquam beatae, culpa deleniti ducimus excepturi explicabo in incidunt ipsam ipsum maxime nesciunt nihil
+    quam quibusdam ratione reiciendis rem sint tenetur totam voluptate? Adipisci alias aliquid, animi asperiores, beatae
+    culpa cumque cupiditate debitis dignissimos distinctio doloremque eos et fuga hic illum inventore ipsam ipsum iusto
+    labore modi, necessitatibus porro quam quod ratione reiciendis rem unde voluptatum! A ab adipisci aliquam, amet
+    assumenda commodi deleniti deserunt distinctio dolore dolores dolorum ducimus enim esse expedita explicabo id
+    impedit ipsa magnam magni molestiae obcaecati pariatur perspiciatis praesentium quas, quidem quis repellat similique
+    suscipit totam ullam vel, velit vitae voluptas. Adipisci alias cum deleniti est excepturi explicabo, fuga officia,
+    quas saepe veniam voluptas voluptate. Cupiditate delectus dolorum facilis iure maiores optio provident quaerat, qui
+    quisquam quos, ratione sint sit sunt ut vitae. Consequuntur cupiditate dignissimos distinctio similique sint? Animi
+    autem dolores excepturi totam. Accusantium adipisci alias aliquid debitis deleniti dolores, earum eligendi eos error
+    ex fuga illo magni maiores nisi officia omnis quam quas quasi qui quidem quis quisquam quod quos repellat sed sunt
+    temporibus ut. Ad at consequatur delectus dolor expedita incidunt iure modi, nam reprehenderit temporibus. Ab ad
+    aliquam aliquid aspernatur assumenda, cupiditate, dolorum eos excepturi explicabo facere hic magni molestiae
+    obcaecati quam quidem saepe sunt unde veritatis vero vitae? Culpa, est, perspiciatis. Accusamus aliquid amet
+    distinctio doloremque doloribus eius eligendi enim error fugiat harum, hic labore libero nemo nulla obcaecati rem
+    repellat soluta suscipit tenetur vel! Alias corporis cumque eaque est, eum facere nam quis quod rem, repellendus
+    soluta voluptas. Accusantium beatae commodi cupiditate, dolorem doloremque, error fugiat impedit maxime minus nam
+    neque nisi perferendis repellat sint voluptates! Aliquam amet asperiores atque consectetur, consequuntur debitis,
+    delectus dolor esse inventore ipsa itaque minus nihil nobis non perspiciatis porro quia sit sunt voluptatem
+    voluptates. Consectetur omnis perferendis voluptate. Ab accusamus alias aliquid asperiores aut, blanditiis dolor
+    dolore doloribus eius hic in incidunt inventore neque nisi nulla provident quaerat quas quidem quisquam rem
+    repellendus reprehenderit suscipit temporibus veritatis voluptas. At dicta doloribus eos excepturi expedita fugiat,
+    ipsam, ipsum laudantium nesciunt odio unde voluptatibus. At corporis debitis delectus deleniti dicta distinctio
+    dolore doloremque ducimus ea earum eius expedita fuga incidunt ipsa ipsam iure libero maxime minus modi molestiae
+    molestias mollitia natus nesciunt numquam obcaecati odio perspiciatis quaerat qui quisquam reiciendis tempora totam
+    veniam veritatis, vero voluptate voluptates voluptatum? Accusantium amet dolorem hic maiores maxime minus numquam
+    obcaecati quisquam quo repudiandae soluta, voluptatum. Accusantium animi autem consequuntur distinctio dolorem enim,
+    eum eveniet exercitationem expedita harum hic iusto labore maxime minima minus molestias nobis nulla officiis omnis
+    placeat porro qui quis tempora unde voluptas voluptate voluptatibus? Ab adipisci cumque delectus distinctio dolorem
+    dolores eius est facere facilis fuga fugiat id illo impedit ipsam iste iusto libero maiores minus, modi molestiae
+    necessitatibus obcaecati odit officiis quae quas quasi quibusdam reiciendis repudiandae saepe sapiente, soluta
+    suscipit vel veritatis. Assumenda at, atque commodi dolore doloribus eos excepturi expedita inventore, ipsa nihil
+    odio quidem, quisquam rem sit tempore velit veniam. A ad aspernatur delectus dignissimos dolor dolores ea eius, et
+    excepturi facere fugiat hic itaque iure iusto laborum maiores maxime modi nobis non, numquam odit omnis pariatur
+    placeat quaerat quisquam sint veritatis voluptas? Accusantium aliquid aperiam culpa cum dignissimos, doloremque
+    ducimus eveniet facilis illum impedit in ipsam, itaque laudantium minus natus necessitatibus nesciunt nisi nulla
+    pariatur quo sapiente sequi soluta tempora temporibus, vel velit voluptatum? Animi asperiores cum dolor, ducimus
+    eum, explicabo fuga ipsam, labore minus molestiae neque possimus praesentium provident quis reiciendis unde
+    voluptas. Autem distinctio eos nihil, numquam ratione sed soluta suscipit velit! Aliquid ducimus, est excepturi
+    expedita fugiat id impedit labore nam neque, nihil nisi perferendis, perspiciatis porro provident quasi recusandae
+    reiciendis soluta totam vero voluptatibus? Eos exercitationem maxime vel.
+</div>
+<script src="jquery-1.12.4.js"></script>
+<script>
+    var model_tag = document.getElementById('model');
+    var model_input = model_tag.children[1];
+    var value_tag = document.getElementById('value');
+    var value_input = value_tag.children[1];
+    var button_ok = document.getElementById('button-ok');
+    var button_add = document.getElementById("button-add");
+    var dialog_add = document.getElementById('dialog_add');
+    var button_cancel = document.getElementById('button-cancel');
+
+    model_input.onfocus = function () {
+        if (this.value = 'firewall model') {
+            this.value = '';
+        }
+    };
+
+    model_input.onblur = function () {
+        if (this.value.length == 0) {
+            this.value = 'firewall model';
+        }
+    };
+
+    // // JQuery 实现checkbox全选；
+    // $('#dialog :button')[0].onclick = function () {
+    //     $('#firewalls :checkbox').prop('checked', true);
+    // };
+
+    // JQuery 实现checkbox全选 方法二；
+    $($('#dialog :button')[0]).click(function () {
+        console.log(this);
+        $('#firewalls :checkbox').prop('checked', true);
+    });
+
+    //JQuery 实现checkbox全不选；
+    $('#dialog :button')[1].addEventListener('click',function(){
+        $('#firewalls :checkbox').prop('checked',false);
+    });
+
+    // //JQuery 实现checkbox反选 #1；
+    // $('#dialog :button')[2].onclick = function(){
+    //     $('#firewalls :checkbox').each(function(){
+    //         if(this.checked){
+    //             this.checked = false;
+    //         }else{
+    //             this.checked = true;
+    //         }
+    //     })
+    // };
+
+    //JQuery 实现checkbox反选 #2；
+    // var v = $('#firewalls :checkbox').prop('checked')?false:true;
+    $('#dialog :button')[2].onclick = function(){
+        $('#firewalls :checkbox').each(function(){
+            $(this).prop('checked',$(this).prop('checked')?false:true);
+        })
+    };
+
+    // //JQuery 实现checkbox反选 #3；
+    // // var v = $('#firewalls :checkbox').prop('checked')?false:true;
+    // $('#dialog :button')[2].onclick = function(){
+    //     $('#firewalls :checkbox').each(function(){
+    //         this.checked = this.checked?false:true;
+    //     })
+    // };
+
+    // button_ok.onclick = function () {
+    //     if (model_input.value.length == 0 || model_input.value == 'firewall model') {
+    //         alert('Please enter the firewall model....');
+    //     } else if (value_input.value.length == 0) {
+    //         alert('Please enter the firewall value....');
+    //     } else {
+    //         add2(model_input.value, value_input.value);
+    //     }
+    // };
+
+    button_ok.addEventListener("click", function () {
+        if (model_input.value.length == 0 || model_input.value == 'firewall model') {
+            alert('Please enter the firewall model....');
+        } else if (value_input.value.length == 0) {
+            alert('Please enter the firewall value....');
+        } else {
+            add2(model_input.value, value_input.value);
+        }
+    }, false);
+
+    button_add.addEventListener("click", function () {
+        dialog_add.style.display = 'block';
+    }, false);
+    button_cancel.addEventListener("click", function () {
+        dialog_add.style.display = 'none';
+    }, false);
+
+
+    function add(model, value) {
+        var tag = document.getElementById("firewalls");
+        var span = document.createElement("span");
+        var checkbox = document.createElement("input");
+        span.innerText = model;
+        // span.style.padding = '2px';
+        span.setAttribute('style', 'padding:2px');
+        checkbox.setAttribute('class', 'checkbox');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('name', 'fw_model');
+        checkbox.setAttribute('value', value);
+        tag.appendChild(span);
+        tag.appendChild(checkbox);
+    }
+
+    function add2(model, value) {
+        var tag = document.querySelector("#firewalls")
+        // var tag = document.querySelector(".checkbox");
+        var span = document.createElement("span");
+        var checkbox = document.createElement("input");
+        span.innerText = model;
+        span.setAttribute('style', 'padding:2px');
+        checkbox.setAttribute('class', 'checkbox');
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('name', 'fw_model');
+        checkbox.setAttribute('value', value);
+        tag.appendChild(span);
+        tag.appendChild(checkbox);
+    }
+
+    function addstring(model, value) {
+        var tag = document.getElementById("firewalls");
+        var s_span = "<span style='padding:2px'>" + model + ":</span>";
+        tag.insertAdjacentHTML("afterbegin", s_span);
+        var s_input = '<input class="checkbox" type="checkbox" name="fw_model" value="' + value + '"/>'
+        // tag.insertAdjacentHTML("beforeend", s_input);
+        tag.insertAdjacentHTML("afterbegin", s_input);
+    }
+
+    function diag_pop() {
+        var shader = document.getElementById('shader');
+        var dialog = document.getElementById("dialog");
+        shader.classList.remove("display-off");
+        dialog.classList.remove("display-off");
+    }
+
+    function diag_remove() {
+        var shader = document.getElementById('shader');
+        var dialog = document.getElementById("dialog");
+        shader.classList.add("display-off");
+        dialog.classList.add("display-off");
+    }
+
+    function collect_fws() {
+        var firewalls = document.getElementById("firewalls").children;
+        var l = [];
+        for (var i = 1; i < firewalls.length; i += 2) {
+            l.push(firewalls[i].value);
+        }
+        console.log(l);
+    }
+
+    function firewalls(m, f) {
+        this.model = m;
+        this.firmware = f;
+    }
+
+    function firewalls_2(m, f) {
+        this.model = m;
+        this.firmware = f;
+    }
+
+    firewalls_2.prototype = {
+        display_model: function () {
+            alert(this.model);
+        },
+        display_firmware: function () {
+            alert(this.firmware);
+        }
+    }
+
+    function test() {
+        var fw = new firewalls("NSA9200", "6.5.3.3");
+        alert(fw.model);
+    }
+
+    function test2() {
+        var fw = new firewalls_2("NSA 9400", "6.5.4.2");
+        fw.display_model();
+        fw.display_firmware();
+    }
+
+</script>
+</body>

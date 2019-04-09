@@ -1,0 +1,20 @@
+[
+  {
+    "courseId": 1,
+    "courseName": "PYTHON",
+    "coursePeriod": "6 MONTHS",
+    "coursePrice": "199"
+  },
+  {
+    "courseId": 2,
+    "courseName": "DEVOPS",
+    "coursePeriod": "9 MONTHS",
+    "coursePrice": "299"
+  },
+  {
+    "courseId": 3,
+    "courseName": "LINUX",
+    "coursePeriod": "12 MONTHS",
+    "coursePrice": "399"
+  }
+]

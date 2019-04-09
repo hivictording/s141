@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Victor Testing</title>
+</head>
+<body>
+<form enctype="multipart/form-data" action="http://localhost:8000/index" method="post">
+    <div>
+        <p>
+            <input type="file" name="sonicwall"><br /><br />
+            <input type="submit" value="Upload"/>
+        </p>
+    </div>
+</form>
+<form action="http://localhost:8000/index" method="get">
+    <div>
+        <p>
+            <textarea name="comments">Please enter your comments here</textarea>
+            <select name="vendors" size=10 multiple="multiple">
+                <option value="cisco">Cisco</option>
+                <option value="arista">Arista</option>
+                <option value="juniper">Juniper</option>
+                <option value="vmware">Vmware</option>
+                <option value="sonicwall">Sonicwall</option>
+            </select>
+            <input type="submit" value="Submit"/>
+        </p>
+    </div>
+</form>
+</body>
+</html>

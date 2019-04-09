@@ -1,0 +1,57 @@
+1.设置签名:区分不同开发人员的身份，（用户名和EMAIL ADDRESS，其实并没有什么实际意义）
+	项目级别：仅在本项目有效
+		git config user.name vding
+		git config user.email jianboding@outlook.com
+	系统用户级别：登录当前操作系统的用户的所有项目都有效
+		git config --global user.name vding
+		git config --global user.email jianboding@outlook.com
+	优先级：项目级别优先
+	不允许两者都没有都不设置
+
+2.基本操作：
+	2.1 状态查看：git status 查看工作区状态
+	2.2 添加操作：git add [file name] 工作区加到暂存区
+	2.3 提交操作：git commit -m "message" [file name] 暂存区提交到本地库
+
+3.git log查看提交记录
+	git log --pretty=oneline (此命令只能查看当前版本之前的版本历史）
+ 	git log --oneline (此命令只能查看当前版本之前的版本历史）
+	git reflog (对于版本前进后退很有作用）
+		head@{当前版本移动到历史版本需要多少步)
+
+4.版本前进后退：
+	4.1 基于索引值：git reset --hard [索引值]
+	4.2 使用^:只能后退:git reset --hard HEAD^^^
+		注意：一个^表示后退一步，n个表示后退n步
+	4.3 使用~:也是只能后退，git reset --hard HEAD~3
+		注意：~后面的数字表示后退几步
+	4.4 reset 命令的三个参数对比：
+		4.4.1 --soft 参数：
+		仅仅在本地库移动HEAD指针，不重置暂存区和工作区
+		4.4.2 --mixed 参数：
+		在本地库移动HEAD指针，并且重置暂存区，不重置工作区
+		4.4.3 --hard参数，最常用
+		在本地库移动HEAD指针，并且重置暂存区和工作区
+	4.5 git reset --hard HEAD 回到当前指针所指的位置，暂存区和工作区将被重置
+	4.6 git diff [file_name]:工作区的文件和暂存区的比较
+		git diff HEAD [file_name]:工作区的文件和本地库的比较，HEAD可代替为任意的指针位置
+		比如 HEAD^,HEAD~2,指针索引值。
+
+5.分支：
+	5.1 创建分支 git branch [分支名]
+	5.2 查看分支 git branch -v 或者 git branch -a
+	5.3 切换分支 git checkout [分支名]
+	5.4 合并分支：先切换到接受修改的分支，git checkout [接受修改的分支名]
+			然后执行merge命令，git merge [被合并的分支名, 也就是新分支名]
+	5.5 解决冲突：
+		第一步 编辑文件，删除特殊符号
+		第二部 把文件修改到满意的程度，保存退出
+		第三步 git add 修改的文件名
+		第四步 git commit -m msg
+			注意第四步commit一定不能带具体文件名
+
+6.远程库：
+	6.1 git add remote origin https://(github repository地址),
+		其中origin是我们给远程库起的名字
+            git remote -v查看远程库列表
+       	    git remote remove 

@@ -1,0 +1,10 @@
+Mary:
+  Parents: {father: Zhu Jinhua, mother: Zhang Xiaolan}
+  age: 38
+  nationality: China
+  sex: female
+Victor:
+  Parents: {father: Ding Yuyuan, mother: Huang Huachu}
+  age: 44
+  nationality: China
+  sex: male

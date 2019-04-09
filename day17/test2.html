@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jquery Excercise</title>
+    <style>
+        .menu{
+            width: 250px;
+            min-height: 150px;
+            background: gainsboro;
+            border: 1px solid beige;
+        }
+        .country{
+            background: lightskyblue;
+            margin-top: 10px;
+        }
+        .province{
+            background: lightseagreen;
+        }
+        /*.city{*/
+            /*background: lightcoral;*/
+        /*}*/
+        .hide{
+            display:none;
+        }
+
+        .city > :nth-child(odd) {
+            background-color: lightpink;
+        }
+
+        .city > :nth-child(even) {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+<div class="menu">
+    <div class="country">
+        中国
+        <div class="province hide">
+            浙江省
+            <div class="city hide">
+                <div>绍兴市</div>
+                <div>杭州市</div>
+                <div>湖州市</div>
+                <div>温州市</div>
+                <div>金华市</div>
+            </div>
+        </div>
+        <div class="province hide">
+            上海市
+            <div class="city hide">
+                <div>普陀区</div>
+                <div>杨浦区</div>
+                <div>虹口区</div>
+                <div>崇明区</div>
+                <div>卢湾区</div>
+            </div>
+        </div>
+        <div class="province hide">
+            江苏省
+            <div class="city hide">
+                <div>南京市</div>
+                <div>苏州市</div>
+                <div>无锡市</div>
+                <div>镇江市</div>
+                <div>扬州市</div>
+            </div>
+        </div>
+    </div>
+    <div class="country">
+        Canada
+        <div class="province hide">
+            Ontario
+            <div class="city hide">
+                <div>Toronto</div>
+                <div>Markham</div>
+                <div>Richmond Hill</div>
+            </div>
+        </div>
+        <div class="province hide">
+            Nova Scotia
+            <div class="city hide">
+                <div>Halifax</div>
+                <div>Truro</div>
+                <div>Cape Breton</div>
+            </div>
+        </div>
+        <div class="province hide">
+            British Columbia
+            <div class="city hide">
+                <div>Vancouver</div>
+                <div>Surrey</div>
+                <div>Richmond</div>
+            </div>
+        </div>
+    </div>
+    <div class="country">
+        United States
+        <div class="province hide">
+            California
+            <div class="city hide">
+                <div>Sunnyvale</div>
+                <div>San Francisco</div>
+                <div>Los Angeles</div>
+            </div>
+        </div>
+        <div class="province hide">
+            Texas
+            <div class="city hide">
+                <div>Dallas</div>
+                <div>Houston</div>
+            </div>
+        </div>
+        <div class="province hide">
+            Washington
+            <div class="city hide">
+                <div>Seattle</div>
+                <div>Renton</div>
+                <div>Tacoma</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="jquery-1.12.4.js"></script>
+<script>
+    // $('.country,.province,.city').hover(function(){
+    //     $(this).css('cursor','pointer');
+    // });
+
+    $('.country,.province,.city').mouseenter(function(){
+        $(this).css('cursor','pointer');
+    });
+
+    $('.country,.province,.city').mouseleave(function(){
+        $(this).css('cursor','arrow');
+    });
+
+    $('.country').click(function(event){
+        if($(this).children().css('display') == 'block'){
+            console.log(event.target);
+            console.log(event.currentTarget);
+            $(this).children().addClass('hide');
+        }else{
+            console.log('show local province and hide other country');
+            $(this).children().removeClass('hide');
+            $(this).siblings().children().addClass('hide').children().addClass('hide');
+        }
+    });
+
+    // $('.country').click(function(){
+    //     console.log('show local province and hide other country');
+    //     $(this).children().removeClass('hide');
+    //     $(this).siblings().children().addClass('hide').children().addClass('hide');
+    // });
+
+
+    // $('.province').click(function(){
+    //     $(this).children().removeClass('hide');
+    //     $(this).siblings().children().addClass('hide');
+    // });
+
+    // $('.province').click(function(event){
+    //     console.log('show local city and hide other province');
+    //     $(this).children().removeClass('hide').parent().siblings().children().addClass('hide');  //JQuery的链式编程写法；
+    //     event.stopPropagation();     //阻止click事件向parent element传播
+    // })
+
+    $('.province').on('click',function(event){
+        console.log('show local city and hide other province');
+        $(this).children().removeClass('hide').parent().siblings().children().addClass('hide');  //JQuery的链式编程写法；
+        event.stopPropagation();
+    })
+
+    // 常见的方法还有: $(this).next();$(this).prev();$(this).parent();$(this).find();
+
+</script>
+</body>
+</html>

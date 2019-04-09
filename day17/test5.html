@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+    <style>
+        .shader {
+            background-color: lightslategrey;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            display: none;
+            z-index: 10;
+        }
+
+        .dialog-box {
+            position: absolute;
+            background-color: black;
+            color: white;
+            width: 300px;
+            height: 170px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-150px, -25px);
+            z-index: 11;
+            display: none;
+        }
+
+        .content {
+            position: relative;
+            min-height: 500px;
+            width: 600px;
+            background-color: lightblue;
+            border: 1px solid green;
+            z-index: 9;
+        }
+
+        .content > .table {
+            border: 1px solid blue;
+            width: 600px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="dialog-box">
+    <div style="width: 250px;height: 30px;margin-top: 10px;">
+        <span style="display:inline-block;width: 80px;text-align: right">Hostname:</span>
+        <input type="text"/>
+    </div>
+    <div style="width: 250px;height: 30px;">
+        <span style="display:inline-block;width: 80px;text-align: right">IP Address:</span>
+        <input type="text"/>
+    </div>
+    <div style="width: 250px;height: 30px;">
+        <span style="display:inline-block;width: 80px;text-align: right">Host Type:</span>
+        <input type="text"/>
+    </div>
+    <div style="width: 250px;height: 30px;">
+        <span style="display:inline-block;width: 80px;text-align: right">Vendor:</span>
+        <input type="text"/>
+    </div>
+    <div>
+        <input type="button" value='OK' style="padding: 0 10px;margin-left: 90px;"></input>
+        <input type="button" value='Cancel' style="padding: 0 10px;margin-left: 30px;"></input>
+    </div>
+</div>
+<div class="shader"></div>
+<div class="content">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Hostname</th>
+            <th>IP Address</th>
+            <th>Host Type</th>
+            <th>Vendor</th>
+            <th>Operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>R1</td>
+            <td>1.1.1.1</td>
+            <td>Router</td>
+            <td>Cisco IOS XR</td>
+            <td>
+                <input type="button" value='Edit' style="padding: 0 10px"></input>
+                <input type="button" value='Delete' style="padding: 0 10px"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>R2</td>
+            <td>1.1.1.2</td>
+            <td>Router</td>
+            <td>Juniper Junos</td>
+            <td>
+                <input type="button" value='Edit' style="padding: 0 10px"></input>
+                <input type="button" value='Delete' style="padding: 0 10px"></input>
+            </td>
+        </tr>
+        <tr>
+            <td>S1</td>
+            <td>1.1.1.3</td>
+            <td>Switch</td>
+            <td>Arista</td>
+            <td>
+                <input type="button" value='Edit' style="padding: 0 10px"></input>
+                <input type="button" value='Delete' style="padding: 0 10px"></input>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div style="min-height: 38px;width:600px;margin-top: 5px;"><input id='button_add' type="button" value='Add'
+                                                                      style="padding: 0 10px;"></input></div>
+</div>
+<script src="jquery-1.12.4.js"></script>
+<script>
+    var mode = ""; // Add or Edit;
+
+    //这种处理方法对新增元素无效
+    // $('.content > .table input[value="Delete"]').click(function(){
+    //     $(this).parent().parent().remove();
+    // });
+
+    //这种处理方法对新增元素有效
+    $(document).on('click', '.content > .table input[value="Delete"]', function () {
+        $(this).parent().parent().remove();
+    });
+
+    //多个属性查找；并且注意on/delegate/bind的区别
+    // $(document).on('click','.content > .table > tbody input[type="button"][value="Edit"]',function () {
+    // $('.content > .table > tbody').on('input[type="button"][value="Edit"]','click',function(){ //错误写法
+    $('.content > .table > tbody').on('click','input[type="button"][value="Edit"]',function(){
+    //     $('.content > .table > tbody').delegate('input[type="button"][value="Edit"]','click',function(){
+    //     $('.content > .table > tbody input[type="button"][value="Edit"]').click(function(){
+    //     $('.content > .table > tbody input[type="button"][value="Edit"]').bind('click',function(){
+        var hostName = $(this).parent().siblings().eq(0).text();
+        var ipAddress = $(this).parent().siblings().eq(1).text();
+        var hostType = $(this).parent().siblings().eq(2).text();
+        var vendor = $(this).parent().siblings().eq(3).text();
+
+        $('.dialog-box').show();
+        $('.dialog-box > div').eq(0).children('input').val(hostName);
+        $('.dialog-box > div').eq(1).children('input').val(ipAddress);
+        $('.dialog-box > div').eq(2).children('input').val(hostType);
+        $('.dialog-box > div').eq(3).children('input').val(vendor);
+
+        mode = 'edit';
+    });
+
+    $('#button_add').click(function () {
+        $('.dialog-box').show();
+        mode = 'add';
+    });
+
+    $('.dialog-box input[value="Cancel"]').click(function () {
+        $(this).parent().siblings().eq(0).children('input').val("");
+        $(this).parent().siblings().eq(1).children('input').val("");
+        $(this).parent().siblings().eq(2).children('input').val("");
+        $(this).parent().siblings().eq(3).children('input').val("");
+        $(this).parent().parent().hide();
+    });
+
+    // $('.dialog-box input[value="OK"]').click(function(){
+    //     var hostName = $(this).parent().siblings().eq(0).children('input').val();
+    //     var ipAddress = $(this).parent().siblings().eq(1).children('input').val();
+    //     var hostType = $(this).parent().siblings().eq(2).children('input').val();
+    //     var vendor = $(this).parent().siblings().eq(3).children('input').val();
+    //
+    //     var temp = "<tr><td>" + hostName + "</td><td>" + ipAddress + "</td><td>" + hostType + "</td><td>" + vendor + "</td><td><input type='button' value='Edit' style='padding: 0 10px'></input><input type='button' value='Delete' style='padding: 0 10px'></input>";
+    //     $('.content tbody').append(temp);
+    // });
+
+    function search(ipAddress) {
+        var result = 0;
+
+        $('.content > .table > tbody > tr').each(function () {
+            if ($(this).children().eq(1).text() == ipAddress) {
+                result = 1;
+            }
+            ;
+        });
+        return(result);
+    };
+
+    $('.dialog-box input[value="OK"]').click(function () {
+        var hostName = $(this).parent().siblings().eq(0).children('input').val();
+        var ipAddress = $(this).parent().siblings().eq(1).children('input').val();
+        var hostType = $(this).parent().siblings().eq(2).children('input').val();
+        var vendor = $(this).parent().siblings().eq(3).children('input').val();
+
+        if(mode=='add'){
+            if(search(ipAddress) == 0){
+                console.log(111);
+                var tr = document.createElement('tr');
+                var td1 = document.createElement('td');
+                // td1.innerText = hostName;
+                $(td1).text(hostName)
+                var td2 = document.createElement('td');
+                // td2.innerText = ipAddress;
+                $(td2).text(ipAddress);
+                var td3 = document.createElement('td');
+                td3.innerText = hostType;
+                var td4 = document.createElement('td');
+                td4.innerText = vendor;
+                var td5 = document.createElement('td');
+                var input_edit = document.createElement('input');
+                $(input_edit).attr('type','button');
+                $(input_edit).val('Edit');
+                // input_edit.type = 'button';
+                // input_edit.value = 'Edit';
+                input_edit.setAttribute('style', 'padding: 0 10px');
+                var input_delete = document.createElement('input');
+                input_delete.type = 'button';
+                input_delete.value = 'Delete';
+                input_delete.setAttribute('style', 'padding: 0 10px');
+                $(td5).append(input_edit);
+                $(td5).append(input_delete);
+                // td5.appendChild(input_edit);
+                // td5.appendChild(input_delete);
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+
+                $('.content tbody')[0].appendChild(tr);
+                // var tag = document.querySelector('tbody');
+                // tag.appendChild(tr);
+                $('.dialog-box').hide();
+            }else{
+                alert("Duplicate IP Address Entered!")
+            }
+        }else if(mode == 'edit'){
+            $('.content > .table > tbody > tr').each(function () {
+            if ($(this).children().eq(1).text() == ipAddress) {
+                $(this).children().eq(0).text(hostName);
+                $(this).children().eq(2).text(hostType);
+                $(this).children().eq(3).text(vendor);
+            };
+        });
+        };
+    });
+
+</script>
+</body>
+</html>

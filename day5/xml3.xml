@@ -1,0 +1,34 @@
+<data>
+    <country name="Liechtenstein">
+        <rank>mary</rank>
+        <year>2008</year>
+        <gdppc>141100</gdppc>
+        <neighbor direction="E" name="Austria" />
+        <neighbor direction="W" name="Switzerland" />
+        <info>
+            <population>100000</population>
+            <size>20</size>
+        </info>
+    </country>
+    <country name="Singapore">
+        <rank>mary</rank>
+        <year>2011</year>
+        <gdppc>59900</gdppc>
+        <neighbor direction="N" name="Malaysia" />
+        <info>
+            <population>2000000</population>
+            <size>50</size>
+        </info>
+    </country>
+    <country name="Panama">
+        <rank>mary</rank>
+        <year>2011</year>
+        <gdppc>13600</gdppc>
+        <neighbor direction="W" name="Costa Rica" />
+        <neighbor direction="E" name="Colombia" />
+        <info>
+            <population>30000000</population>
+            <size>100</size>
+        </info>
+    </country>
+</data>

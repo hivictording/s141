@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+    <div style="background:lightskyblue;width:500px;height:500px;position: absolute;left:50%;top:50%;transform: translate(-250px,-250px)">
+        <form action="http://www.cisco.com">
+            <input type="text" value="AAA"/>
+            <!--<input type="submit" value="OK"/>-->
+            <input type="button" value="GO" onclick="goto()"/>
+            <input type="button" value="count" onclick="count()"/>
+            <input type="button" value="count1" onclick="count1()"/>
+            <input type="button" value="countStop" onclick="countStop()"/>
+        </form>
+    </div>
+    <script>
+        function goto(){
+            form = document.querySelector('form');
+            form.submit();
+        }
+        
+        function count() {
+            setInterval(function(){
+                console.log(1);
+            },3000);
+        }
+
+        function count1() {
+            setTimeout(function(){
+                console.log(1);
+            },3000);
+        }
+
+        function countStop() {
+            var f = setInterval(function(){
+                console.log(1);
+                clearInterval(f);
+            },3000);
+
+        }
+
+    </script>
+</body>
+</html>

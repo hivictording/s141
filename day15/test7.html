@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Grids</title>
+    <style>
+        .wrapper{
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-column-gap: 1em;
+        }
+        .wrapper > div{
+            border: 1px solid red;
+            background: lightgray;
+            padding: 1em;
+        }
+        .wrapper > div:nth-child(odd){
+            background: gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem consectetur dolorem eligendi exercitationem illo ipsam labore perspiciatis rem. A, accusantium adipisci asperiores assumenda atque autem consectetur consequuntur deleniti dignissimos dolor dolorum eaque earum enim et excepturi expedita facilis harum itaque libero mollitia nihil non nulla possimus provident quaerat qui ratione rerum saepe, tempore temporibus totam veniam voluptates voluptatibus. Delectus doloremque ex fugiat magnam maiores minus nobis nulla officia optio porro quasi rem repellat suscipit totam, veniam. A impedit maxime porro!
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolorem enim recusandae? At blanditiis dolorum, exercitationem id impedit perferendis sit! Aperiam deleniti distinctio dolores ducimus earum eligendi iste laudantium maiores, maxime mollitia nihil nobis officiis quia ullam, velit voluptatibus, voluptatum!
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem consectetur dolorem eligendi exercitationem illo ipsam labore perspiciatis rem. A, accusantium adipisci asperiores assumenda atque autem consectetur consequuntur deleniti dignissimos dolor dolorum eaque earum enim et excepturi expedita facilis harum itaque libero mollitia nihil non nulla possimus provident quaerat qui ratione rerum saepe, tempore temporibus totam veniam voluptates voluptatibus. Delectus doloremque ex fugiat magnam maiores minus nobis nulla officia optio porro quasi rem repellat suscipit totam, veniam. A impedit maxime porro!
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolorem enim recusandae? At blanditiis dolorum, exercitationem id impedit perferendis sit! Aperiam deleniti distinctio dolores ducimus earum eligendi iste laudantium maiores, maxime mollitia nihil nobis officiis quia ullam, velit voluptatibus, voluptatum!
+        </div>
+    </div>
+</body>
+</html>

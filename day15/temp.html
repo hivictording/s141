@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SQA's System Test Home</title>
+    <style>
+        .page-header{
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            /*grid-column-gap: 5px;*/
+            height: 30px;
+            line-height: 30px;
+            position: fixed;
+            top:0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        .page-header > div{
+            border: 1px dotted black;
+            background: lightblue;
+            padding: 1em;
+            text-align: center;
+        }
+        .page-header > div:nth-child(odd){
+            background: lightsteelblue;
+        }
+        .checkbox{
+            margin-right: 30px;
+        }
+    </style>
+</head>
+<body style="margin:0 auto">
+<div class="page-header">
+    <div>SQA's System Test Home</div>
+    <div>MENU</div>
+    <div>
+        <img src=" {{static_url('sonicwall.png') }}" style="height: 30px;">
+    </div>
+</div>
+<div style="background-color: lightgray;height:2000px;margin-top: 74px">
+    <form action="http://10.7.100.219:9999/index" method="get">
+        <h3 style="height: 20px;display: inline-block">Please select the firewall model:</h3><br />
+        <div style="background-color: lightcyan;margin-bottom: 5px;">
+            <span style="padding:2px">NSA 2650:</span><input class="checkbox" type="checkbox" name="fw_model" value="2650"/>
+            <span style="padding:2px">NSA 3650:</span><input class="checkbox" type="checkbox" name="fw_model" value="3650"/>
+            <span style="padding:2px">NSA 4650:</span><input class="checkbox" type="checkbox" name="fw_model" value="4650"/>
+            <span style="padding:2px">NSA 5650:</span><input class="checkbox" type="checkbox" name="fw_model" value="5650"/>
+            <span style="padding:2px">NSA 6650:</span><input class="checkbox" type="checkbox" name="fw_model" value="6650"/>
+            <span style="padding:2px">NSA 9250:</span><input class="checkbox" type="checkbox" name="fw_model" value="9250"/>
+            <span style="padding:2px">NSA 9450:</span><input class="checkbox" type="checkbox" name="fw_model" value="9450"/>
+            <span style="padding:2px">NSA 9650:</span><input class="checkbox" type="checkbox" name="fw_model" value="9650"/>
+        </div>
+        <div style="background-color: lightcyan;margin-bottom: 5px;">
+            <span style="padding:2px">NSA 2600:</span><input class="checkbox" type="checkbox" name="fw_model" value="2600"/>
+            <span style="padding:2px">NSA 3600:</span><input class="checkbox" type="checkbox" name="fw_model" value="3600"/>
+            <span style="padding:2px">NSA 4600:</span><input class="checkbox" type="checkbox" name="fw_model" value="4600"/>
+            <span style="padding:2px">NSA 5600:</span><input class="checkbox" type="checkbox" name="fw_model" value="5600"/>
+            <span style="padding:2px">NSA 6600:</span><input class="checkbox" type="checkbox" name="fw_model" value="6600"/>
+            <span style="padding:2px">NSA 9200:</span><input class="checkbox" type="checkbox" name="fw_model" value="9200"/>
+            <span style="padding:2px">NSA 9400:</span><input class="checkbox" type="checkbox" name="fw_model" value="9400"/>
+            <span style="padding:2px">NSA 9600:</span><input class="checkbox" type="checkbox" name="fw_model" value="9600"/>
+        </div>
+        <div style="background-color: lightcyan;margin-bottom: 5px">
+            <span style="padding:2px">SOHO 250:</span><input class="checkbox" type="checkbox" name="fw_model" value="250"/>
+            <span style="padding:2px">TZ 350:</span><input class="checkbox" type="checkbox" name="fw_model" value="350"/>
+            <span style="padding:2px">TZ 600:</span><input class="checkbox" type="checkbox" name="fw_model" value="600"/>
+            <span style="padding:2px">TZ 500:</span><input class="checkbox" type="checkbox" name="fw_model" value="500"/>
+            <span style="padding:2px">TZ 400:</span><input class="checkbox" type="checkbox" name="fw_model" value="400"/>
+            <span style="padding:2px">TZ 300:</span><input class="checkbox" type="checkbox" name="fw_model" value="300"/>
+        </div>
+        <br />
+        <input type="submit" value="Run Test" />
+    </form>
+</div>
+</body>
+</html>

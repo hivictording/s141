@@ -1,0 +1,23 @@
+[
+  {
+    "courseId": [
+      1,
+      2
+    ],
+    "schoolId": 1,
+    "schoolLocation": "SHANGHAI",
+    "schoolName": "SNWL SH"
+  },
+  {
+    "courseId": [],
+    "schoolId": 2,
+    "schoolLocation": "BEIJING",
+    "schoolName": "SNWL BJ"
+  },
+  {
+    "courseId": [],
+    "schoolId": 3,
+    "schoolLocation": "GUANGZHOU",
+    "schoolName": "SNWL GZ"
+  }
+]

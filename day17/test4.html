@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .page-header {
+            width: 980px;
+            height: 50px;
+            margin: 0 auto;
+            background: #cccccc;
+            line-height: 48px;
+        }
+
+        .menu {
+            width: 100px;
+            border: 1px solid blue;
+            background: lightskyblue;
+            text-align: center;
+        }
+
+        .page-content {
+            width: 980px;
+            height: 50px;
+            margin: 0 auto;
+            min-height: 1000px;
+            background-color: lightsteelblue;
+        }
+
+        .float {
+            float: left;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="page-header">
+    <div class="menu float">menu 1</div>
+    <div class="menu float">menu 2</div>
+    <div class="menu float">menu 3</div>
+</div>
+<div class="page-content">
+    <div>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque laborum numquam odio provident qui totam
+        voluptatibus? Aspernatur consequatur et incidunt ipsa iusto nam repudiandae? Ea enim eos laboriosam nihil odio?
+    </div>
+    <div class="hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci dolore ducimus ea eaque
+        eligendi, eos est
+        exercitationem expedita hic ipsa ipsum laboriosam nisi nobis obcaecati odio odit, perferendis quam rem
+        repellendus soluta, tempore tenetur vel? Accusamus dignissimos laboriosam sequi! Ad culpa cupiditate esse in
+        incidunt minus nobis, quaerat. Labore.
+    </div>
+    <div class="hide">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem consequuntur distinctio,
+        earum eum in
+        incidunt nulla odio possimus repudiandae? Assumenda deserunt, ducimus ex magni modi numquam odio, officia
+        pariatur, provident quo repellendus saepe soluta! Aliquam architecto aut blanditiis culpa dignissimos distinctio
+        dolor dolores ea est harum hic id illum, inventore labore minus nam nemo nulla odio perferendis placeat porro
+        quae, quas qui ratione reiciendis repellat sapiente sunt veritatis vero.
+    </div>
+</div>
+<script src="jquery-1.12.4.js"></script>
+<script>
+    $('.menu').hover(function(){
+        $(this).css('cursor','pointer');
+    });
+
+    $('.menu').click(function(){
+        // $('.page-content').children().eq($(this).index()).show().siblings().hide();
+        $('.page-content').find('div').eq($(this).index()).show().siblings().hide();
+    })
+</script>
+</body>
+</html>

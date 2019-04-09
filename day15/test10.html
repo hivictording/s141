@@ -1,0 +1,190 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+	<!--<meta charset="utf-8">-->
+	<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+	<!--<title>Show / hide navigation (JavaScript)</title>-->
+	<!--<style>-->
+		<!--body {-->
+			<!--background: #333;-->
+			<!--color: #000;-->
+			<!--margin: 0;-->
+			<!--font: 300 18px/27px "Helvetica Neue", Helvetica, Arial, sans-serif;-->
+		<!--}-->
+
+		<!--#container {-->
+			<!--width: 240px;-->
+			<!--position: relative;-->
+			<!--background: #fff;-->
+			<!--margin: 0 auto;-->
+			<!--padding: 40px;-->
+			<!--border-radius: 0 0 5px 5px;-->
+			<!--box-shadow: 0 0 8px 2px #000;-->
+		<!--}-->
+
+		<!--#main_nav {-->
+			<!--display: none;-->
+			<!--position: absolute;-->
+			<!--top: 0;-->
+			<!--left: 0;-->
+			<!--background: #fff;-->
+			<!--width: 100%;-->
+
+			<!--border-radius: 0 0 5px 5px;-->
+			<!--box-shadow: 0 0 8px 2px #000;-->
+		<!--}-->
+
+		<!--.with_nav #main_nav {-->
+			<!--display: block;-->
+		<!--}-->
+
+		<!--.access_aid {-->
+			<!--display: none;-->
+		<!--}-->
+
+		<!--#access_nav {-->
+			<!--display: block;-->
+			<!--position: absolute;-->
+			<!--top: 0;-->
+			<!--right: 0;-->
+			<!--width: 40px;-->
+			<!--height: 0;-->
+			<!--padding-top: 40px;-->
+			<!--overflow: hidden;-->
+			<!--border: 1px solid #ccc;-->
+			<!--background: white 10px 10px / 20px 20px no-repeat;-->
+
+			<!--background-image: -webkit-repeating-linear-gradient(#ccc, #ccc 2px, #fff 2px, #fff 4px);-->
+			<!--background-image: repeating-linear-gradient(#ccc, #ccc 2px, #fff 2px, #fff 4px);-->
+			<!--z-index: 1;-->
+		<!--}-->
+
+		<!--.with_nav #access_nav {-->
+			<!--background-image: linear-gradient(45deg, transparent 13px, #ccc 13px, #ccc 15px, transparent 0), linear-gradient(-45deg, white 13px, #ccc 13px, #ccc 15px, white 0);-->
+		<!--}-->
+	<!--</style>-->
+<!--</head>-->
+<!--<body id="body">-->
+	<!--<div id="container">-->
+		<!--<p><a href="#main_nav" id="access_nav" class="access_aid">Skip to navigation</a></p>-->
+		<!--<article>-->
+			<!--<h1>Show / Hide Navigation (JavaScript)</h1>-->
+			<!--<p>An example of a simple technique to show and hide navigation, using <em>JavaScript</em>. Particularly useful when designing for mobile.</p>-->
+			<!--<p>This also uses CSS gradients to produce the "show" and "hide" button icons instead of images.</p>-->
+			<!--<p>Delightful.</p>-->
+			<!--<p>See <a href="http://www.htmldog.com/techniques/showhide/">the related HTML Dog Techniques article</a> for more.</p>-->
+		<!--</article>-->
+
+		<!--<nav id="main_nav">-->
+			<!--<ul>-->
+				<!--<li><a href="">This</a></li>-->
+				<!--<li><a href="">That</a></li>-->
+				<!--<li><a href="">The other</a></li>-->
+			<!--</ul>-->
+			<!--<p><a href="#body" id="access_top" class="access_aid">Skip to top</a></p>-->
+		<!--</nav>-->
+
+		<!--&lt;!&ndash; Link back to HTML Dog: &ndash;&gt;-->
+		<!--<p><a href="http://www.htmldog.com/examples/"><img src="http://www.htmldog.com/badge1.gif" alt="HTML Dog"></a></p>-->
+	<!--</div>-->
+<!--</body>-->
+<!--<script>-->
+	<!--var nav = document.getElementById('access_nav'),-->
+	    <!--body = document.body;-->
+
+	<!--nav.addEventListener('click', function(e) {-->
+		<!--body.className = body.className? '' : 'with_nav';-->
+		<!--e.preventDefault();-->
+	<!--});-->
+<!--</script>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Show / hide navigation (target)</title>
+	<style>
+		body {
+			background: #333;
+			color: #000;
+			margin: 0;
+			font: 300 18px/27px "Helvetica Neue", Helvetica, Arial, sans-serif;
+		}
+
+		#container {
+			width: 240px;
+			position: relative;
+			background: #fff;
+			margin: 0 auto;
+			padding: 40px;
+			border-radius: 0 0 5px 5px;
+			box-shadow: 0 0 8px 2px #000;
+		}
+
+		#main_nav {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: #fff;
+			width: 100%;
+
+			border-radius: 0 0 5px 5px;
+			box-shadow: 0 0 8px 2px #000;
+		}
+
+		#main_nav:target {
+			display: block;
+		}
+
+		.access_aid {
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 40px;
+			height: 0;
+			padding-top: 40px;
+			overflow: hidden;
+			border: 1px solid #ccc;
+			background: white 10px 10px / 20px 20px no-repeat;
+		}
+
+		#access_nav {
+			background-image: -webkit-repeating-linear-gradient(#ccc, #ccc 2px, #fff 2px, #fff 4px);
+			background-image: repeating-linear-gradient(#ccc, #ccc 2px, #fff 2px, #fff 4px);
+		}
+
+		#access_top {
+			background-image: linear-gradient(45deg, transparent 13px, #ccc 13px, #ccc 15px, transparent 0), linear-gradient(-45deg, white 13px, #ccc 13px, #ccc 15px, white 0);
+		}
+	</style>
+</head>
+<body id="body">
+	<div id="container">
+		<p><a href="#main_nav" id="access_nav" class="access_aid">Skip to navigation</a></p>
+		<article>
+			<h1>Show / Hide Navigation (target)</h1>
+			<p>An example of a simple technique to show and hide navigation, manipulating the <code>:target</code> pseudo class. Particularly useful when designing for mobile.</p>
+			<p>This also uses CSS gradients to produce the "show" and "hide" button icons instead of images.</p>
+			<p>Spiffing.</p>
+			<p>See <a href="http://www.htmldog.com/techniques/showhide/">the related HTML Dog Techniques article</a> for more.</p>
+		</article>
+
+		<nav id="main_nav">
+			<ul>
+				<li><a href="">This</a></li>
+				<li><a href="">That</a></li>
+				<li><a href="">The other</a></li>
+			</ul>
+			<p><a href="#body" id="access_top" class="access_aid">Skip to top</a></p>
+		</nav>
+
+		<!-- Link back to HTML Dog: -->
+		<p><a href="http://www.htmldog.com/examples/"><img src="http://www.htmldog.com/badge1.gif" alt="HTML Dog"></a></p>
+	</div>
+</body>
+</html>
