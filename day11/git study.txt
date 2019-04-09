@@ -12,6 +12,7 @@
 	2.1 状态查看：git status 查看工作区状态
 	2.2 添加操作：git add [file name] 工作区加到暂存区
 	2.3 提交操作：git commit -m "message" [file name] 暂存区提交到本地库
+	2.4 .gitigonore文件包含不需要track的文件
 
 3.git log查看提交记录
 	git log --pretty=oneline (此命令只能查看当前版本之前的版本历史）
@@ -55,3 +56,13 @@
 		其中origin是我们给远程库起的名字
             git remote -v查看远程库列表
        	    git remote remove 
+	6.2 git clone https://(github repository地址)，有下面三个作用：
+		6.2.1 把远程库下载到本地
+		6.2.2 创建origin远程地址别名
+		6.2.3 初始化本地库
+	6.3 git push origin master 把本地master库推到远程origin库
+	6.4 git pull = git fetch + merge
+		git pull origin master
+		git fetch origin master 抓取远程master库，这里master指的远程分支库名
+		git checkout origin/master 查看抓取下来的远程origin master库
+		git merge origin/master 把远程origin master库merge到本地，这里master指的远程分支库名
