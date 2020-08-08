@@ -2,9 +2,9 @@
 
 # -*- coding: utf-8 -*-
 
-import pika
-import random
 import time
+
+import pika
 
 rabbitmq = '192.168.2.21'
 credentials = pika.PlainCredentials('vding','password')
@@ -21,7 +21,7 @@ def callback(ch,method,properties,body):
     # i = random.randint(1,8)
     print("Message received: {}".format(body.decode()))
     # time.sleep(i)
-    time.sleep(10)
+    time.sleep(3)
     ch.basic_ack(delivery_tag=method.delivery_tag)  #这句话不能省略,和下面的auto_ack搭配使用
 
 channel.basic_qos(prefetch_count=1)  #非常重要，consumer只有等处理完了下一个任务才能继续拿一个任务，否则先启动的consumer会把所有当前的任务拿完

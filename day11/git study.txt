@@ -66,3 +66,8 @@
 		git fetch origin master 抓取远程master库，这里master指的远程分支库名
 		git checkout origin/master 查看抓取下来的远程origin master库
 		git merge origin/master 把远程origin master库merge到本地，这里master指的远程分支库名
+	6.5 解决冲突：
+		如果不是基于GitHUb远程库的最新版本所作的修改，不能推送，只能先拉取
+		拉取下来如果进入冲突状态，则按照“分支冲突解决”操作解决即可
+
+7.用SSH而不是HTTPS访问远程：ssh-keygen
