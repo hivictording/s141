@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Applications List</title>
+</head>
+<style>
+    .dialog_add_app {
+        background-color: lightblue;
+        position: fixed;
+        width: 500px;
+        height: 300px;
+        display: none;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 11;
+    }
+
+    .shader {
+        background-color: lightgray;
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: none;
+        z-index: 10;
+        opacity: 0.8;
+    }
+</style>
+<body>
+<h1>Applications Summary</h1>
+<div class="dialog_add_app">
+    <form action="" method="post">
+        <p><label>Application Name:</label><input type="text" name="appname" placeholder="Application Name"></p>
+        <p>
+            <label>Owner</label>
+            <select name="username">
+                {% for user in users %}
+                    <option value="{{ user.id }}" name="username">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label>Platform</label>
+            <select name="platform">
+                {% for value,display in app_form.fields.platform.choices %}
+                    <option value="{{ value }}" name="platform">{{ display }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label>Hosts</label>
+            <select name="hostname" multiple>
+                {% for host in hosts %}
+                    <option value="{{ host.id }}" name="hostname">{{ host.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><input type="button" name="ok-add-app" value="Add"><input type="button" name="cancel-add-app" value="Cancel"></p>
+    </form>
+    <span></span>
+
+</div>
+<div class="shader"></div>
+<input type="button" id="button-app-add" value="Add Applications"/>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Application Name</th>
+        <th>Owner</th>
+        <th>Platform</th>
+        <th>Hosts</th>
+        <th>Operations</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for app in apps %}
+        <tr>
+            <th>{{ app.name }}</th>
+            <th>{{ app.owner_name }}</th>
+            <th>{{ app.platform }}</th>
+            <th>
+                {% for host in app.host %}
+                    {{ host }}
+                {% endfor %}
+            </th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for k,v in envs.items %}
+        <tr>
+            <th>{{ k }}</th>
+            <th>{{ v }}</th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+<script src="/static/jquery-1.12.4.js"></script>
+<script>
+    $('#button-app-add').click(function () {
+        $('.shader').show();
+        $('.dialog_add_app').show();
+    });
+
+    $('.dialog_add_app > form').find(':button[name="cancel-add-app"]').click(function () {
+        $('.shader').hide();
+        $('.dialog_add_app').hide();
+    });
+
+    $('.dialog_add_app > form').find(':button[name="ok-add-app"]').click(function () {
+        $.ajax({
+            url: '/labs/appAdd/',
+            type: 'POST',
+            dataType: 'JSON',
+            data: $('.dialog_add_app > form').serialize(),
+            success: function (data) {
+                if (data.status){
+                    {#location.reload();#}
+                    location.href = '/labs/home/'
+                }else{
+                    $('.dialog_add_app span').text(data.err_msg);
+                }
+            }
+        })
+    });
+</script>
+</html>

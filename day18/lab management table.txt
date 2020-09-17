@@ -1,0 +1,15 @@
+users:
+	userid:primary key;auto increment;int(10);
+	username:varchar(30)
+	password:varchar(12)
+
+hosts:
+	id
+	name
+	ip
+	netmask
+	type
+	owner
+	location
+	registration_date
+	

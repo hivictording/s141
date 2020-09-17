@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Labs Management Login</title>
+</head>
+<body>
+    <div class=".">
+{#        action为空表示发往当前页面#}
+        <form action="" method="post">
+            <label>Username:</label>
+            <input type="text" name="username">
+            <label>Password:</label>
+            <input type="password" name="password">
+            <input type="submit" value="OK">
+        </form>
+        <span style="margin-top: 50px;display: inline-block">{{ error_message }}</span>
+    </div>
+</body>
+</html>

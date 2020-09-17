@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wechat Login</title>
+    <link rel='stylesheet' href="/static/commons.css">
+    <style>
+        label {
+            display: inline-block;
+            height: 20px;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+<form action="/login/" method="post">
+    <p>
+        <label>Username:</label>
+        <input type="text" name="username">
+    </p>
+    <p>
+        <label>Password:</label>
+        <input type="password" name="password">
+        <input type="submit" value="Commit">
+    </p>
+    <span>{{ error_message }}</span>
+</form>
+
+</body>
+<script src="/static/jquery-1.12.4.js"></script>
+</html>

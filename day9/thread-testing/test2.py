@@ -6,6 +6,7 @@ import threading
 import time
 import random
 
+
 # At start-up, a Thread does some basic initialization and then calls its run() method,
 # which calls the target function passed to the constructor. To create a subclass of Thread, override run() to do whatever is necessary.
 
@@ -18,7 +19,7 @@ class People(threading.Thread):
     #     self.p_name = args[0]
     #     self.p_age = args[1]
 
-    def __init__(self,p_name,p_age,t_name):
+    def __init__(self, p_name, p_age, t_name):
         super().__init__()
         self.p_name = p_name
         self.p_age = p_age
@@ -26,17 +27,18 @@ class People(threading.Thread):
         self.setName(t_name)
 
     def run(self):
-        t = random.randint(1,20)
-        print("{} is started for {} seconds".format(threading.current_thread().getName(),t))
-        print("My name is {},I am {} years old".format(self.p_name,self.p_age))
+        t = random.randint(1, 20)
+        print("{} is started for {} seconds".format(threading.current_thread().getName(), t))
+        print("My name is {},I am {} years old".format(self.p_name, self.p_age))
         time.sleep(t)
         print("{} is stopped".format(threading.current_thread().getName()))
+
 
 # t1 = People(args=("Victor",44),name="vding",daemon=True)
 # t2 = People(args=("mary",38),name="mzhu")
 
-t1 = People("victor",44,"vding")
-t2 = People("victor",38,"mzhu")
+t1 = People("victor", 44, "vding")
+t2 = People("victor", 38, "mzhu")
 
 t1.start()
 t2.start()
@@ -44,10 +46,7 @@ t2.start()
 main_thread = threading.main_thread()
 
 for th in threading.enumerate():
-    if th == main_thread: continue
-    if th.isDaemon(): th.join(1)
-
-
-
-
-
+    if th == main_thread:
+        continue
+    if th.isDaemon():
+        th.join(3)

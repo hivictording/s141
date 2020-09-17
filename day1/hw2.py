@@ -8,10 +8,10 @@ print("Welcome aboard!")
 #     dict_users = json.loads(json_users)
 #     f_users.close()
 
-with open("users.json","r") as fh_users:
+with open("users.json", "r") as fh_users:
     dict_users = json.load(fh_users)
 
-with open("userinfo.txt","r") as f_userinfo:
+with open("userinfo.txt", "r") as f_userinfo:
     locked_user = f_userinfo.readlines()
     f_userinfo.close()
 

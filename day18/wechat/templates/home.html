@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+</head>
+<body>
+    <div>
+        <form action="/home/" method="post">
+            <p>
+                <label>Name:</label>
+                <input type="text" name='name' placeholder="your name">
+                <label>Age:</label>
+                <input type="text" name='age' placeholder="your age">
+                <label>Gender:</label>
+                <input type="text" name='gender' placeholder="your gender">
+                <label>Hometown:</label>
+                <input type="text" name='city' placeholder="your hometown">
+            </p>
+            <p>
+                <input type="submit" value="Submit">
+            </p>
+        </form>
+    </div>
+    <table style="border: solid lightslategrey 1px">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>City</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.name  }}</td>
+                <td>{{ user.age  }}</td>
+                <td>{{ user.gender  }}</td>
+                <td>{{ user.city  }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

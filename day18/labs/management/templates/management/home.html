@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Labs Home</title>
+</head>
+<style>
+    .hide{
+        display:none;
+    }
+    .shader {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: lightslategrey;
+        opacity: 0.5;
+        display: none;
+        z-index: 10;
+    }
+
+    .addhosts,.edit_hosts {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background-color: lightpink;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        z-index: 11;
+    }
+
+    .delete_host{
+        position: absolute;
+        width: 250px;
+        height: 100px;
+        background-color: lightpink;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        z-index: 11;
+    }
+
+    label {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+    }
+</style>
+<body>
+<div class="delete_host">
+    <form action="" method="post">
+        <p></p>
+        <input type="button" value="Delete" id="confirm-delete"><input type="button" value="Exit" id="confirm-exit">
+        <span name="error"></span>
+        <span name="host_id" style="display: none"></span>
+    </form>
+</div>
+<div class="edit_hosts">
+    <form id='form-edit' action="" method="post">
+        <p class="hide"><label>Host ID:</label><input type="text" name="host_id"></p>
+        <p><label>Host Name:</label><input type="text" name="host_name"></p>
+        <p><label>IP Address:</label><input type="text" name="host_ip"></p>
+        <p><label>Netmask:</label><input type="text" name="host_netmask"></p>
+        <p><label>Type:</label><input type="text" name="host_type"></p>
+        <p>
+            <label>Owner:</label>
+            <select name='host_owner'>
+                {% for user in users %}
+                    <option value={{ user.id }}>{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><label>Location:</label><input type="text" name="host_location"></p>
+        <p class="hide"><label>Registration Date:</label><input type="text" name="host_reg_date"></p>
+        <input type="button" id="button_edit_confirm" value="confirm" style="margin-top: 10px;margin-left: 30px">
+        <input type="button" id="button_edit_exit" value="exit" style="margin-top: 10px;margin-left: 250px">
+        <span></span>
+    </form>
+</div>
+<div class="addhosts">
+    <form id='form' action="{% url 'home' %}" method="post">
+        <p><label>Host Name:</label><input type="text" name="host_name"></p>
+        <p><label>IP Address:</label><input type="text" name="host_ip"></p>
+        <p><label>Netmask:</label><input type="text" name="host_netmask"></p>
+        <p><label>Type:</label><input type="text" name="host_type"></p>
+        <p>
+            <label>Owner:</label>
+            <select name='host_owner'>
+                {% for user in users %}
+                    <option value={{ user.id }}>{{ user.username }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p><label>Location:</label><input type="text" name="host_location"></p>
+        <input type="button" id="button_confirm" value="confirm" style="margin-top: 10px;margin-left: 30px">
+        <input type="button" id="button_exit" value="exit" style="margin-top: 10px;margin-left: 250px">
+        <span></span>
+    </form>
+
+</div>
+<div class="shader"></div>
+<div class="main">
+    <h1>Welcome to Hosts Management Table</h1>
+    <table border="1" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>IP Address</th>
+            <th>Netmask</th>
+            <th>Type</th>
+            <th>Owner Name</th>
+            <th>Location</th>
+            <th>Registration Date</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for host in hosts %}
+            <tr host_id={{ host.id }} owner_id={{ host.owner_id }}>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ host.name }}</td>
+                <td>{{ host.ip }}</td>
+                <td>{{ host.netmask }}</td>
+                <td>{{ host.type }}</td>
+                <td><a href="/labs/user_get/?uid={{ host.owner_id }}">{{ host.owner__username }}</a></td>
+{#                <td><a href="{% url 'user' host.owner_id %}">{{ host.owner__username }}</a></td>#}
+{#                <td><a href="/labs/user{{ host.owner_id }}">{{ host.owner__username }}</a></td>#}
+                <td>{{ host.location }}</td>
+                <td tag="reg_date">{{ host.reg_date }}</td>
+                <td><input class='edit' type="button" value="Edit"/> <input class='delete' type="button" value="Delete"/></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <input type="button" id="button_add" value="add" style="margin-top: 50px">
+</div>
+<div>
+    <form action="/home/" method="post" enctype="multipart/form-data">
+        <input type="file" name='file' value="aaa"/>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</body>
+<script src="/static/jquery-1.12.4.js"></script>
+<script>
+    $('#button_add')[0].onclick = function () {
+        $('.shader').show();
+        $('.addhosts').show();
+    };
+
+    $('#button_exit')[0].onclick = function () {
+        $('.shader').hide();
+        $('.addhosts').hide();
+    };
+
+    $('.edit').click (function() {
+        $('.shader').show();
+        $('.edit_hosts').show();
+
+        $('.edit_hosts > form input[name="host_id"]').val($(this).parent().parent().attr('host_id'));
+        $('.edit_hosts > form input[name="host_name"]').val($(this).parent().siblings().eq(1).text());
+        $('.edit_hosts > form input[name="host_ip"]').val($(this).parent().siblings().eq(2).text());
+        $('.edit_hosts > form input[name="host_netmask"]').val($(this).parent().siblings().eq(3).text());
+        $('.edit_hosts > form input[name="host_type"]').val($(this).parent().siblings().eq(4).text());
+        $('.edit_hosts > form select[name="host_owner"]').val($(this).parent().parent().attr('owner_id'));
+        $('.edit_hosts > form input[name="host_location"]').val($(this).parent().siblings().eq(6).text());
+        $('.edit_hosts > form input[name="host_reg_date"]').val($(this).parent().siblings("[tag='reg_date']").text());
+    }
+    );
+
+    $('#button_edit_confirm').click(function () {
+        $.ajax({
+            url: '/labs/ajax_edit/',
+            type: 'POST',
+            data: $('#form-edit').serialize(),
+            success(data){
+                var d = JSON.parse(data);
+                    if (d.status) {
+                        location.reload();
+                    } else {
+                        $('.edit_hosts > form > span').text(d.err_msg);
+            }
+        }
+    })
+    });
+
+    $('#button_edit_exit').click(function(){
+        $('.shader').hide();
+        $('.edit_hosts').hide();
+    });
+
+    $('.delete').click(function () {
+        var h_name = $(this).parent().siblings().eq(1).text();
+        var h_id = $(this).parent().parent().attr('host_id');
+
+        $('.delete_host p').text("Are you sure to delete host " + h_name + "?");
+        $('.delete_host span[name="host_id"]').text(h_id);
+        $('.shader').show();
+        $('.delete_host').show();
+    });
+
+    $('#confirm-delete').click(function(){
+        var h_id = $(this).parent().find('span[name="host_id"]').text();
+
+        $.ajax({
+            url:'/labs/ajax_del/',
+            type: 'POST',
+            data: {"host_id":h_id},
+            success:function (data) {
+                var d=JSON.parse(data);
+                if (d.status) {
+                    location.reload();
+                }else{
+                    $('.delete_host > form > span[name="error"]').text(d.err_msg);
+                }
+            }
+        });
+
+
+    });
+
+    $('#confirm-exit').click(function(){
+        $('.shader').hide();
+        $('.delete_host').hide();
+    });
+
+    {#$('#button_confirm')[0].onclick = function () {#}
+    {#    var name = $('.addhosts input[name="host_name"]').val();#}
+    {#    var ip = $('.addhosts input[name="host_ip"]').val();#}
+    {#    var netmask = $('.addhosts input[name="host_netmask"]').val();#}
+    {#    var type = $('.addhosts input[name="host_type"]').val();#}
+    {#    var owner = $('.addhosts select[name="host_owner"]').val();#}
+    {#    var loc = $('.addhosts input[name="host_location"]').val();#}
+    {##}
+    {#    $.ajax({#}
+    {#            url: '/labs/ajax/',#}
+    {#            type: 'POST',#}
+    {#            data: {#}
+    {#                'host_name': name,#}
+    {#                'host_ip': ip,#}
+    {#                'host_netmask': netmask,#}
+    {#                'host_type': type,#}
+    {#                'host_owner': owner,#}
+    {#                'host_location': loc#}
+    {#            },#}
+    {#            success: function (data) {#}
+    {#                var d = JSON.parse(data);#}
+    {#                if (d.status) {#}
+    {#                    location.reload();#}
+    {#                } else {#}
+    {#                    $('.addhosts > form > span').text(d.err_msg);#}
+    {#                }#}
+    {#            }#}
+    {#        }#}
+    {#    )#}
+    {#  };#}
+
+    $('#button_confirm')[0].onclick = function () {
+        $.ajax(
+            {
+                url: '/labs/ajax/',
+                type: 'POST',
+                data: $('#form').serialize(),
+                success: function (data) {
+                    var d = JSON.parse(data);
+                    if (d.status) {
+                        location.reload();
+                    } else {
+                        $('.addhosts > form > span').text(d.err_msg);
+                    }
+                }
+            }
+        )
+    };
+</script>
+</html>

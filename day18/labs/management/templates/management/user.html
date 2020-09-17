@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<div>
+    <p>
+        <span>User ID:</span>{{ user.id }}<span tag="id"></span>
+    </p>
+    <p>
+        <span>User Name:</span>{{ user.username }}<span tag="name"></span>
+    </p>
+    <p>
+        <span>Age:</span>{{ user.age }}<span tag="age"></span>
+    </p>
+    <p>
+        <span>Gender:</span>{{ user.get_gender_display }}<span tag="gender"></span>
+    </p>
+    <p>
+        <span>Role:</span>{{ user.role }}<span tag="role"></span>
+    </p>
+</div>
+</body>
+</html>
