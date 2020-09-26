@@ -22,7 +22,7 @@ def sayhi(name, age, interval):
 thread_list = []
 for i in range(10):
     new_thread = threading.Thread(name="vding{}".format(i), target=sayhi, args=('Victor{}'.format(i), i,  i+3))
-    new_thread.setDaemon(True)
+    # new_thread.setDaemon(True)
     thread_list.append(new_thread)
 
 print('main thread start......')
@@ -30,7 +30,7 @@ print('main thread start......')
 
 for t in thread_list:
     t.start()
-    t.join(1.0)
+    # t.join(1.0)
 s_time = time.time()
 
 
@@ -52,11 +52,11 @@ s_time = time.time()
 #
 
 
-while True:
-    c_time = time.time()
-    if c_time - s_time > 10:
-        print(c_time - s_time)
-        break
+# while True:
+#     c_time = time.time()
+#     if c_time - s_time > 10:
+#         print(c_time - s_time)
+#         break
 
 print('main thread end......')
-print(f'main thread execution time: {c_time - s_time}')
+# print(f'main thread execution time: {c_time - s_time}')
